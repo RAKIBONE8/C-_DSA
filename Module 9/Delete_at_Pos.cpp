@@ -47,21 +47,29 @@ int size(Node *head)
     return count;
 }
 
-void delete_at_head(Node *&head)
+void delete_at_head(Node *&head,Node* &tail)
 {
 
     Node *todelete = head;
-    
     head = head->next;
     delete todelete;
+    if(head == NULL)
+    {
+        tail = NULL;
+        return;
+    }
     head->prev = NULL;
 }
-void delete_tail(Node *&tail)
+void delete_tail(Node* &head,Node *&tail)
 {
     Node *todelete = tail;
     tail = tail->prev;
-
     delete todelete;
+    if(tail == NULL)
+    {
+        head = NULL;
+        return;
+    }
     tail->next = NULL;
 }
 
@@ -70,12 +78,12 @@ void delete_at_pos(Node *&head, Node *&tail, int pos)
     Node *tmp = head;
     if (pos == 0)
     {
-        delete_at_head(head);
+        delete_at_head(head,tail);
         return;
     }
     else if (pos == size(head) - 1)
     {
-        delete_tail(tail);
+        delete_tail(head,tail);
     }
     for (int i = 1; i <= pos - 1; i++)
     {
@@ -89,17 +97,17 @@ void delete_at_pos(Node *&head, Node *&tail, int pos)
 int main()
 {
     Node *head = new Node(10);
-    Node *a = new Node(20);
-    Node *b = new Node(30);
+    // Node *a = new Node(20);
+    // Node *b = new Node(30);
     Node *c = new Node(40);
 
     Node *tail = c;
-    head->next = a;
-    a->prev = head;
-    a->next = b;
-    b->prev = a;
-    b->next = c;
-    c->prev = b;
+    // head->next = a;
+    // a->prev = head;
+    // a->next = b;
+    // b->prev = a;
+    // b->next = c;
+    // c->prev = b;
 
     Display_Normal(head);
     int pos;
@@ -111,11 +119,11 @@ int main()
     }
     else if(pos == 0)
     {
-        delete_at_head(head);
+        delete_at_head(head,tail);
     }
     else if(pos == size(head)-1)
     {
-        delete_tail(tail);
+        delete_tail(head,tail);
     }
     else
     {
