@@ -46,6 +46,7 @@ void RevList(Node* &head,Node* &tail)
         front = front->next;
         back = back->prev;
     }
+    swap(front->data,back->data);
 }
 
 int main()
